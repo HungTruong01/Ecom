@@ -1,10 +1,14 @@
 const route = require("express").Router();
 const ctrls = require("../controllers/user");
-const { verifyToken } = require("../middleware/verifyToken");
+const { verifyToken, isAdmin } = require("../middleware/verifyToken");
 route.post("/register", ctrls.register);
 route.post("/login", ctrls.login);
 route.get("/current", verifyToken, ctrls.getCurrent);
 route.get("/refreshToken", verifyToken, ctrls.refreshAccessToken);
 route.get("/logout", ctrls.logout);
-
+route.get("/forgot-password", ctrls.forgotPassword);
+route.get("/", [verifyToken, isAdmin], ctrls.getUsers);
+route.delete("/", [verifyToken, isAdmin], ctrls.deleteUser);
+route.put("/current", [verifyToken], ctrls.updateUser);
+route.put("/:uid", [verifyToken, isAdmin], ctrls.updateUserByAdmin);
 module.exports = route;
