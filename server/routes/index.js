@@ -1,7 +1,9 @@
 const userRoute = require("./user");
+const productRoute = require("./product");
 const { notFound, errHandler } = require("../middleware/errHandler");
 const initRoutes = (app) => {
   app.use("/api/user", userRoute);
+  app.use("/api/product", productRoute);
 
   app.use(notFound);
   app.use(errHandler);
